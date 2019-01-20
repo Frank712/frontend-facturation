@@ -3,6 +3,11 @@
   <div class="card-body">
     <h5 class="card-title">List clients</h5>
 
+    <div class="my-2 text-left">
+      <button class="btn btn-rounder btn-primary" type="button" [routerLink]="['/clients/form']">Create Client</button>
+    </div>
+
+
     <table class="table table-bordered table-striped">
       <thead>
         <tr>
@@ -17,7 +22,7 @@
       <tr *ngFor="let client of clients" >
         <td> {{ client.id  }}</td>
         <td> {{ client.name  }}</td>
-        <td> {{ client.lastName  }}</td>
+        <td> {{ client.lastname  }}</td>
         <td> {{ client.email  }}</td>
         <td> {{ client.createdAt  }}</td>
       </tr>
