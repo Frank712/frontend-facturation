@@ -18,4 +18,16 @@ export class ClientService {
   createClient( client: Client ): Observable<Client> {
     return this.http.post<Client>(this.urlEndPoint, client, {headers: this.httpHeader});
   }
+
+  getClient( id ): Observable<Client> {
+    return this.http.get<Client>( `${this.urlEndPoint}/${id}`);
+  }
+
+  updateClient( client: Client ): Observable<Client> {
+    return this.http.put<Client>( `${this.urlEndPoint}/${client.id}`, client, {headers: this.httpHeader} );
+  }
+
+  deleteClient( id: number ): Observable<Client> {
+    return this.http.delete<Client>(`${this.urlEndPoint}/${id.toString()}`, {headers: this.httpHeader});
+  }
 }

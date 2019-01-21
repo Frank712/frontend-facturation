@@ -7,8 +7,11 @@
       <button class="btn btn-rounder btn-primary" type="button" [routerLink]="['/clients/form']">Create Client</button>
     </div>
 
+    <div *ngIf="clients?.length == 0"  class="alert-info">
+      Not found registers on database!
+    </div>
 
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped" *ngIf="clients?.length > 0">
       <thead>
         <tr>
           <th>Id</th>
@@ -16,6 +19,8 @@
           <th>Last Name</th>
           <th>Email</th>
           <th>Created at</th>
+          <th>Edit</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -25,6 +30,12 @@
         <td> {{ client.lastname  }}</td>
         <td> {{ client.email  }}</td>
         <td> {{ client.createdAt  }}</td>
+        <td><button type="button" name="edit" [routerLink]="['/clients/form', client.id]" class="btn btn-primary">
+          Edit
+        </button></td>
+        <td><button type="button" name="delete" (click)="delete( client )" class="btn btn-danger">
+          Delete
+        </button></td>
       </tr>
       </tbody>
 
