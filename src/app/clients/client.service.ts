@@ -21,7 +21,7 @@ export class ClientService {
     return this.http.get( this.urlEndPoint + '/page/' + page ).pipe(
       tap((resp: any) => {
         (resp.content as Client[]).forEach( c => {
-          console.log(c.id, ', ', c.name);
+          console.log(c.id);
         });
       }),
       map( (resp: any) => {
