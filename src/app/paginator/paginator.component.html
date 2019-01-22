@@ -1,0 +1,7 @@
+<ul *ngIf="pages.length > 0" class="pagination">
+  <li *ngFor="let page of pages" class="page-item">
+    <span class="page-link" *ngIf="page - 1 === paginator.number">{{page}}</span>
+    <a *ngIf="page - 1 !== paginator.number" [routerLink]="['/clients/page', page - 1 ]" class="page-link" >{{ page }}</a>
+
+  </li>
+</ul>

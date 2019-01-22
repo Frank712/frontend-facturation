@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {formatDate, DatePipe, registerLocaleData} from '@angular/common';
 import {Client} from './client';
 import { Observable, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { tap, map, catchError } from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
@@ -17,19 +17,23 @@ export class ClientService {
   private urlEndPoint = 'http://localhost:8080/api/clients';
   private httpHeader = new HttpHeaders({'Content-Type': 'application/json'});
 
-  getClients(): Observable<Client[]> {
-    return this.http.get( this.urlEndPoint ).pipe(
-      map( resp => {
-        let clients = resp as Client[];
-        return clients.map( c => {
-
+  getClients(page: number): Observable<Client[]> {
+    return this.http.get( this.urlEndPoint + '/page/' + page ).pipe(
+      tap((resp: any) => {
+        (resp.content as Client[]).forEach( c => {
+          console.log(c.id, ', ', c.name);
+        });
+      }),
+      map( (resp: any) => {
+        (resp.content as Client[]).map( c => {
           c.name = c.name.toUpperCase();
           /*c.createdAt = formatDate(c.createdAt, 'dd-MM-yyyy', 'en-US');*/
-          let datePipe = new DatePipe('he');
+          /*let datePipe = new DatePipe('he');*/
           /*c.createdAt = datePipe.transform(c.createdAt, 'EEEE dd, MMMM, yyyy');*/
           /*c.createdAt = datePipe.transform(c.createdAt, 'fullDate');*/
           return c;
         });
+        return resp;
       })
     );
   }
@@ -69,6 +73,9 @@ export class ClientService {
   updateClient( client: Client ): Observable<any> {
     return this.http.put<any>( `${this.urlEndPoint}/${client.id}`, client, {headers: this.httpHeader} ).pipe(
       catchError( e => {
+        if ( e.status === 400 ) {
+          return throwError(e);
+        }
         console.log(e.error.message);
         Swal.fire(
           e.error.message,
