@@ -1,3 +1,8 @@
+<ul class="alert alert-danger" *ngIf="errors?.length > 0">
+  <li *ngFor="let error of errors">
+    {{ error }}
+  </li>
+</ul>
 <div class="card bg-dark text-white">
   <div class="card-header"> {{ title }} </div>
   <div class="card-body">
@@ -5,11 +10,11 @@
       <div class="form-group row">
         <label for="name" class="col-form-label col-sm-2">Name: </label>
         <div class="col-sm-6">
+          <!--required minlength="4"-->
           <input id="name" type="text" class="form-control"
                  [(ngModel)]="client.name" name="name"
-                 required minlength="4"
                  #nameForm="ngModel">
-          <div class="alert-danger" *ngIf="nameForm.invalid && (nameForm.dirty || nameForm.touched)">
+          <div class="alert alert-danger" *ngIf="nameForm.invalid && (nameForm.dirty || nameForm.touched)">
             <div *ngIf="nameForm.errors.required">
               The name is required
             </div>
@@ -23,10 +28,11 @@
       <div class="form-group row">
         <label for="lastname" class="col-form-label col-sm-2">Last Name:</label>
         <div class="col-sm-6">
-          <input id="lastname" type="text" class="form-control" required
+          <!-- required -->
+          <input id="lastname" type="text" class="form-control"
                  [(ngModel)]="client.lastname" name="lastname"
                  #lastnameForm="ngModel">
-          <div class="alert-danger" *ngIf="lastnameForm.invalid && (lastnameForm.dirty || lastnameForm.touched)">
+          <div class="alert alert-danger" *ngIf="lastnameForm.invalid && (lastnameForm.dirty || lastnameForm.touched)">
             <div *ngIf="lastnameForm.errors.required">
               The last name is required
             </div>
@@ -37,9 +43,10 @@
       <div class="form-group row">
         <label for="email" class="col-form-label col-sm-2">Email: </label>
         <div class="col-sm-6">
-          <input id="email" type="text" class="form-control" required email
+          <!-- required email -->
+          <input id="email" type="text" class="form-control"
                  [(ngModel)]="client.email" name="email" #emailForm="ngModel">
-          <div class="alert-danger" *ngIf="emailForm.invalid && (emailForm.dirty || emailForm.touched)">
+          <div class="alert alert-danger" *ngIf="emailForm.invalid && (emailForm.dirty || emailForm.touched)">
             <div *ngIf="emailForm.errors.required">
               The email is required
             </div>

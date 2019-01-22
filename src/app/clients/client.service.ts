@@ -23,6 +23,9 @@ export class ClientService {
     return this.http.post<any>(this.urlEndPoint, client, {headers: this.httpHeader}).pipe(
       catchError( e => {
         console.log(e.error.message);
+        if ( e.status === 400 ) {
+          return throwError(e);
+        }
         Swal.fire(
           e.error.message,
           e.error.error,
@@ -52,6 +55,9 @@ export class ClientService {
     return this.http.put<any>( `${this.urlEndPoint}/${client.id}`, client, {headers: this.httpHeader} ).pipe(
       catchError( e => {
         console.log(e.error.message);
+        if ( e.status === 400 ) {
+          return throwError(e);
+        }
         Swal.fire(
           e.error.message,
           e.error.error,

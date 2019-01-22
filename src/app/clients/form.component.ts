@@ -12,6 +12,8 @@ export class FormComponent implements OnInit {
 
   private client: Client = new Client();
   private title: string = 'Create a client';
+  private errors: string[] = [];
+
   constructor( private _serviceClient: ClientService,
                private router: Router,
                private activatedRoute: ActivatedRoute ) { }
@@ -37,6 +39,11 @@ export class FormComponent implements OnInit {
           `${response.message} (ID: ${response.client.id})`,
           'success'
         );
+      },
+      err => {
+        this.errors = err.error.errors as string[];
+        console.log(err.error.errors);
+        console.log('Status: ', err.status);
       }
     );
   }
@@ -61,6 +68,11 @@ export class FormComponent implements OnInit {
           `${response.message}`,
           'success'
         );
+      },
+      err => {
+        this.errors = err.error.errors as string[];
+        console.log(err.error.errors);
+        console.log('Status: ', err.status);
       }
     );
   }
