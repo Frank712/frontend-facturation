@@ -25,13 +25,18 @@ export class FormComponent implements OnInit {
     this._serviceClient.createClient( this.client ).subscribe(
       response => {
         this.router.navigate(['/clients']);
-        Swal.fire({
+        /*Swal.fire({
           position: 'center',
           type: 'success',
           title: `Client ${response.name} created!`,
           showConfirmButton: false,
           timer: 1300
-        });
+        });*/
+        Swal.fire(
+          'Created!',
+          `${response.message} (ID: ${response.client.id})`,
+          'success'
+        );
       }
     );
   }
@@ -53,7 +58,7 @@ export class FormComponent implements OnInit {
         this.router.navigate(['/clients']);
         Swal.fire(
           'Updated!',
-          `Client ${response.name} has been updated!`,
+          `${response.message}`,
           'success'
         );
       }
