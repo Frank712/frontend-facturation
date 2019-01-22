@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
+import {formatDate, DatePipe, registerLocaleData} from '@angular/common';
 import {Client} from './client';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import localeFr from '@angular/common/locales/fr';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +18,20 @@ export class ClientService {
   private httpHeader = new HttpHeaders({'Content-Type': 'application/json'});
 
   getClients(): Observable<Client[]> {
-    return this.http.get<Client[]>( this.urlEndPoint );
+    return this.http.get( this.urlEndPoint ).pipe(
+      map( resp => {
+        let clients = resp as Client[];
+        return clients.map( c => {
+
+          c.name = c.name.toUpperCase();
+          /*c.createdAt = formatDate(c.createdAt, 'dd-MM-yyyy', 'en-US');*/
+          let datePipe = new DatePipe('he');
+          /*c.createdAt = datePipe.transform(c.createdAt, 'EEEE dd, MMMM, yyyy');*/
+          /*c.createdAt = datePipe.transform(c.createdAt, 'fullDate');*/
+          return c;
+        });
+      })
+    );
   }
 
   createClient( client: Client ): Observable<any> {
@@ -55,9 +70,6 @@ export class ClientService {
     return this.http.put<any>( `${this.urlEndPoint}/${client.id}`, client, {headers: this.httpHeader} ).pipe(
       catchError( e => {
         console.log(e.error.message);
-        if ( e.status === 400 ) {
-          return throwError(e);
-        }
         Swal.fire(
           e.error.message,
           e.error.error,
