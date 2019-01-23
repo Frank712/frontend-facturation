@@ -3,7 +3,7 @@ import {formatDate, DatePipe, registerLocaleData} from '@angular/common';
 import {Client} from './client';
 import { Observable, throwError } from 'rxjs';
 import { tap, map, catchError } from 'rxjs/operators';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpHeaders, HttpRequest} from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import localeFr from '@angular/common/locales/fr';
@@ -101,11 +101,19 @@ export class ClientService {
     );
   }
 
-  uploadImage(file: File, id): Observable<Client> {
+  uploadImage(file: File, id): Observable<HttpEvent<{}>> {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('id', id);
-    return this.http.post(`${this.urlEndPoint}/upload`, formData).pipe(
+
+    const req = new HttpRequest('POST', `${this.urlEndPoint}/upload`, formData, {
+      reportProgress: true
+    });
+    return this.http.request( req );
+  }
+}
+
+/*.pipe(
       map((response: any) => response.client as Client ),
       catchError( e => {
         console.log(e.error.message);
@@ -116,6 +124,4 @@ export class ClientService {
         );
         return throwError(e);
       })
-    );
-  }
-}
+    );*/

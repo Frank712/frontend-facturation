@@ -23,6 +23,13 @@
               </button>
             </div>
           </div>
+          <hr>
+          <div class="progress" *ngIf="progress > 0">
+            <div class="progress-bar bg-info" role="progressbar" [ngStyle]="{width: progress+'%'}" attr.aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100">
+              {{ progress }}%
+            </div>
+          </div>
+
         </div>
 
         <div class="col-sm">
