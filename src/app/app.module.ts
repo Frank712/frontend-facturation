@@ -18,6 +18,7 @@ import { PaginatorComponent } from './paginator/paginator.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { DetailComponent } from './clients/detail/detail.component';
 registerLocaleData( localeHe, 'he' );
 
 const routes: Routes = [
@@ -26,7 +27,8 @@ const routes: Routes = [
   { path: 'clients', component: ClientsComponent },
   { path: 'clients/page/:page', component: ClientsComponent },
   { path: 'clients/form', component: FormComponent },
-  { path: 'clients/form/:id', component: FormComponent }
+  { path: 'clients/form/:id', component: FormComponent },
+  { path: 'clients/detail/:id', component: DetailComponent }
 ];
 
 @NgModule({
@@ -37,7 +39,8 @@ const routes: Routes = [
     DirectiveComponent,
     ClientsComponent,
     FormComponent,
-    PaginatorComponent
+    PaginatorComponent,
+    DetailComponent
   ],
   imports: [
     BrowserModule,

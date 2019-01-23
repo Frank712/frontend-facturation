@@ -1,7 +1,7 @@
 <div class="card border-primary mb-3">
   <div class="card-header">Clients</div>
   <div class="card-body">
-    <h5 class="card-title">List clients</h5>
+    <h5 class="card-title">Clients List</h5>
 
     <div class="my-2 text-left">
       <button class="btn btn-rounder btn-primary" type="button" [routerLink]="['/clients/form']">Create Client</button>
@@ -25,7 +25,10 @@
       </thead>
       <tbody>
       <tr *ngFor="let client of clients" >
-        <td> {{ client.id  }}</td>
+
+        <td>
+          <button class="btn btn-info" [routerLink]="['/clients/detail/', client.id]"> {{ client.id  }} </button>
+        </td>
         <td> {{ client.name  }}</td>
         <td> {{ client.lastname | uppercase }}</td>
         <td> {{ client.email  }}</td>
